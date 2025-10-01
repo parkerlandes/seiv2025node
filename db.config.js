@@ -1,8 +1,9 @@
 module.exports = {
     HOST: 'localhost',
     USER: 'root',
-    PASSWORD: '',
-    DB: 'course4',
+    PASSWORD: 'Malaysia156!',
+    DB: 'course',
+    PORT: 3306,
     dialect: 'mariadb',
     pool: {
         max: 5,

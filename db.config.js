@@ -1,9 +1,9 @@
 module.exports = {
-    HOST: 'localhost',
-    USER: 'root',
-    PASSWORD: 'Malaysia156!',
-    DB: 'course',
-    PORT: 3306,
+    HOST: process.env.DB_HOST,
+    USER: process.env.DB_USER,
+    PASSWORD: process.env.DB_PW,
+    DB: process.env.DB_NAME,
+    PORT: process.env.DB_PORT,
     dialect: 'mariadb',
     pool: {
         max: 5,

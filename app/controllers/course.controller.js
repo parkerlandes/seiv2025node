@@ -67,6 +67,101 @@ exports.findOne = (req, res) => {
       });
     });
 };
+// Find courses by hours
+exports.findByHours = (req, res) => {
+  const hours = req.params.hours;
+  course.findAll({ where: { hours: hours } })
+    .then(data => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find courses with hours=${hours}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving courses with hours=" + hours
+      });
+    });
+};
+// Find courses by courseNum
+exports.findByCourseNum = (req, res) => {
+  const courseNum = req.params.courseNum;
+  course.findAll({ where: { courseNum: courseNum } })
+    .then(data => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find courses with courseNum=${courseNum}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving courses with courseNum=" + courseNum
+      });
+    });
+};
+// Find courses by name
+exports.findByName = (req, res) => {
+  const name = req.params.name;
+  course.findAll({ where: { title: name } })
+    .then(data => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find courses with name=${name}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving courses with name=" + name
+      });
+    });
+};
+// Find courses by dept
+exports.findByDept = (req, res) => {
+  const dept = req.params.dept;
+  course.findAll({ where: { dept: dept } })
+    .then(data => {
+      if (data.length > 0) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `No courses found with dept=${dept}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving courses with dept=" + dept
+      });
+    });
+};
+// Find courses by level
+exports.findByLevel = (req, res) => {
+  const courseLevel = req.params.courseLevel;
+  course.findAll({ where: { courseLevel: courseLevel } })
+    .then(data => {
+      if (data.length > 0) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `No courses found with level=${courseLevel}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving courses with level=" + courseLevel
+      });
+    });
+};
 // Update a course by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;

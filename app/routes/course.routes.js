@@ -1,9 +1,7 @@
 module.exports = app => {
   const courses = require("../controllers/course.controller.js");
   var router = require("express").Router();
-  // Create a new course
-  router.post("/", courses.create);
-
+  
   //filters for the courses
 
   // Retrieve all courses
@@ -20,9 +18,12 @@ module.exports = app => {
   router.get("/d/:dept", courses.findByDept);
   //retrieve courses by level
   router.get("/l/:courseLevel", courses.findByLevel);
-
+  // Create a new course
+  router.post("/", courses.create);
   // Update a course with id
   router.put("/:id", courses.update);
+  // Multi-delete route (by IDs)
+  router.delete("/multi", courses.deleteMany);
   // Delete a course with id
   router.delete("/:id", courses.delete);
   //delete all courses

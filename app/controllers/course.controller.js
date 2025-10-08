@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new course
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.name) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -12,12 +12,16 @@ exports.create = (req, res) => {
   }
 
   // Create a course match exactly to the database attributes
-  const course = {
-    title: req.body.title,
+  const courseData = {
+    name: req.body.name,
+    courseNum: req.body.courseNum,
+    hours: req.body.hours,
+    courseLevel: req.body.courseLevel,
+    dept: req.body.dept,
     description: req.body.description,
   };
   // Save course in the database
-  course.create(course)
+  course.create(courseData)
     .then(data => {
       res.send(data);
     })
@@ -28,6 +32,7 @@ exports.create = (req, res) => {
       });
     });
 };
+
 // Retrieve all courses from the database.
 exports.findAll = (req, res) => {
   const courseId = req.query.courseId;
@@ -48,6 +53,7 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
 // Find a single course with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -67,6 +73,7 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
 // Find courses by hours
 exports.findByHours = (req, res) => {
   const hours = req.params.hours;
@@ -86,6 +93,7 @@ exports.findByHours = (req, res) => {
       });
     });
 };
+
 // Find courses by courseNum
 exports.findByCourseNum = (req, res) => {
   const courseNum = req.params.courseNum;
@@ -105,6 +113,7 @@ exports.findByCourseNum = (req, res) => {
       });
     });
 };
+
 // Find courses by name
 exports.findByName = (req, res) => {
   const name = req.params.name;
@@ -124,6 +133,7 @@ exports.findByName = (req, res) => {
       });
     });
 };
+
 // Find courses by dept
 exports.findByDept = (req, res) => {
   const dept = req.params.dept;
@@ -143,6 +153,7 @@ exports.findByDept = (req, res) => {
       });
     });
 };
+
 // Find courses by level
 exports.findByLevel = (req, res) => {
   const courseLevel = req.params.courseLevel;
@@ -185,6 +196,7 @@ exports.update = (req, res) => {
       });
     });
 };
+
 // Delete a course with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -208,6 +220,30 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+// Delete multiple courses by their IDs
+exports.deleteMany = (req, res) => {
+  const ids = req.body.ids;
+
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).send({ message: "No course IDs provided for deletion." });
+  }
+
+  course.destroy({
+    where: { id: ids }
+  })
+    .then((numDeleted) => {
+      res.send({ message: `${numDeleted} courses deleted successfully.` });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send({
+        message: err.message || "Error deleting courses."
+      });
+    });
+};
+
+
 // Delete all courses from the database.
 exports.deleteAll = (req, res) => {
   course.destroy({

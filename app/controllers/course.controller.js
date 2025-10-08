@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new course
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.name) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -12,12 +12,16 @@ exports.create = (req, res) => {
   }
 
   // Create a course match exactly to the database attributes
-  const course = {
-    title: req.body.title,
+  const courseData = {
+    name: req.body.name,
+    courseNum: req.body.courseNum,
+    hours: req.body.hours,
+    courseLevel: req.body.courseLevel,
+    dept: req.body.dept,
     description: req.body.description,
   };
   // Save course in the database
-  course.create(course)
+  course.create(courseData)
     .then(data => {
       res.send(data);
     })
